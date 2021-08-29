@@ -3,8 +3,8 @@
 #define CANVAS_WIDTH 640
 #define CANVAS_HEIGHT 360
 #define FRAMES_PER_SECOND 60
-#define GRAVITY 1 //  Acceleration due to gravity (Pixel/Frame)/Frame
-#define JUMP_VELOCITY -20
+#define GRAVITY 1000 //  Acceleration due to gravity (Pixel/Frame)/s
+#define JUMP_VELOCITY -600
 
 void DrawGameWindow()
 {
@@ -13,28 +13,38 @@ void DrawGameWindow()
 
 void StartGame()
 {
-    const int width = 50;
-    const int height = 80;
+    Texture2D scarfySpriteSheet = LoadTexture("textures/scarfy.png");
+
+    Rectangle scarfyRec;
+    scarfyRec.width = scarfySpriteSheet.width / 6;
+    scarfyRec.height = scarfySpriteSheet.height;
+    scarfyRec.x = 0;
+    scarfyRec.y = 0;
+
+    Vector2 scarfyPos;
+    scarfyPos.x = CANVAS_WIDTH * 0.2;
+    scarfyPos.y = CANVAS_HEIGHT - scarfyRec.height;
 
     bool isInAir = false;
 
-    int posY = CANVAS_HEIGHT - height;
     int velocity = 0;
 
     SetTargetFPS(FRAMES_PER_SECOND);
     while (!WindowShouldClose())
     {
+        float deltaTime = GetFrameTime();
+
         BeginDrawing();
         ClearBackground(WHITE);
 
-        if (posY >= CANVAS_HEIGHT - height)
+        if (scarfyPos.y >= CANVAS_HEIGHT - scarfyRec.height)
         {
             velocity = 0;
             isInAir = false;
         }
         else
         {
-            velocity += GRAVITY;
+            velocity += GRAVITY * deltaTime;
             isInAir = true;
         }
 
@@ -43,16 +53,20 @@ void StartGame()
             velocity += JUMP_VELOCITY;
         }
 
-        posY += velocity;
-        DrawRectangle(CANVAS_WIDTH / 2, posY, width, height, BLUE);
+        scarfyPos.y += velocity * deltaTime;
+
+        DrawTextureRec(scarfySpriteSheet, scarfyRec, scarfyPos, WHITE);
 
         EndDrawing();
     }
+
+    UnloadTexture(scarfySpriteSheet);
 }
 
 int main()
 {
     DrawGameWindow();
     StartGame();
+
     CloseWindow();
 }
