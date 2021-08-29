@@ -1,4 +1,4 @@
-# Jumoing the Unknown
+# Jumping the Unknown
 
 - Using Raylib
 - Procedural programming

@@ -1,10 +1,15 @@
 #ignore all kind of files
 *
+
 #except this files
 !.gitignore
-!*.cpp
 !License
 !Readme.md
+!*.gif
+!*.cpp
+!*.png
+
+#except this folders
 !src
 !print
-!*.gif
+!textures
