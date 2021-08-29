@@ -1,0 +1,10 @@
+#ignore all kind of files
+*
+#except this files
+!.gitignore
+!*.cpp
+!License
+!Readme.md
+!src
+!print
+!*.gif
