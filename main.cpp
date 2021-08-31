@@ -5,6 +5,7 @@
 #define FRAMES_PER_SECOND 60
 #define GRAVITY 1000 //  Acceleration due to gravity (Pixel/Frame)/s
 #define JUMP_VELOCITY -600
+#define ANIMATION_FRAME_TIME 0.08
 
 void DrawGameWindow()
 {
@@ -24,6 +25,9 @@ void StartGame()
     Vector2 scarfyPos;
     scarfyPos.x = CANVAS_WIDTH * 0.2;
     scarfyPos.y = CANVAS_HEIGHT - scarfyRec.height;
+
+    int frame = 0;
+    float timeToNextAnimationFrame;
 
     bool isInAir = false;
 
@@ -54,6 +58,20 @@ void StartGame()
         }
 
         scarfyPos.y += velocity * deltaTime;
+
+        scarfyRec.x = frame * scarfyRec.width;
+
+        timeToNextAnimationFrame += deltaTime;
+        if (timeToNextAnimationFrame >= ANIMATION_FRAME_TIME && !isInAir)
+        {
+            timeToNextAnimationFrame = 0;
+            frame++;
+
+            if (frame == 5)
+            {
+                frame = 0;
+            }
+        }
 
         DrawTextureRec(scarfySpriteSheet, scarfyRec, scarfyPos, WHITE);
 
