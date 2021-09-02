@@ -15,6 +15,7 @@ void DrawGameWindow()
 void StartGame()
 {
     Texture2D scarfySpriteSheet = LoadTexture("textures/scarfy.png");
+    Texture2D nebulaSpriteSheet = LoadTexture("textures/12_nebula_spritesheet.png");
 
     Rectangle scarfyRec;
     scarfyRec.width = scarfySpriteSheet.width / 6;
@@ -22,9 +23,19 @@ void StartGame()
     scarfyRec.x = 0;
     scarfyRec.y = 0;
 
+    Rectangle nebulaRec;
+    nebulaRec.width = nebulaSpriteSheet.width / 8;
+    nebulaRec.height = nebulaSpriteSheet.height / 8;
+    nebulaRec.x = 0;
+    nebulaRec.y = 0;
+
     Vector2 scarfyPos;
     scarfyPos.x = CANVAS_WIDTH * 0.2;
     scarfyPos.y = CANVAS_HEIGHT - scarfyRec.height;
+
+    Vector2 nebulaPos;
+    nebulaPos.x = 500;
+    nebulaPos.y = CANVAS_HEIGHT - nebulaRec.height;
 
     int frame = 0;
     float timeToNextAnimationFrame;
@@ -74,11 +85,13 @@ void StartGame()
         }
 
         DrawTextureRec(scarfySpriteSheet, scarfyRec, scarfyPos, WHITE);
+        DrawTextureRec(nebulaSpriteSheet, nebulaRec, nebulaPos, WHITE);
 
         EndDrawing();
     }
 
     UnloadTexture(scarfySpriteSheet);
+    UnloadTexture(nebulaSpriteSheet);
 }
 
 int main()
